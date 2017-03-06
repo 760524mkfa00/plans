@@ -1,6 +1,6 @@
 <?php
 
-namespace Plans;
+namespace Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Role extends Model
 
     public function users()
     {
-        return $this->belongsToMany('User')->withTimestamps();
+        return $this->belongsToMany('Plans\Model\User')->withTimestamps();
     }
 
 }

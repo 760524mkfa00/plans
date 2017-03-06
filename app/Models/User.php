@@ -1,6 +1,6 @@
 <?php
 
-namespace Plans;
+namespace Plans\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany('Role')->withTimestamps();
+        return $this->belongsToMany('Plans\Models\Role')->withTimestamps();
     }
 
 }

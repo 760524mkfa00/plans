@@ -1,10 +1,10 @@
 <?php
 
-namespace Plans;
+namespace Plans\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Building extends Model
+class Floor extends Model
 {
     //
 }
