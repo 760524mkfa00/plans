@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    RewriteCond %{HTTP_HOST} ^plans.sd23ops\.ca [NC]
+    RewriteCond %{SERVER_PORT} 80 
+    RewriteRule ^(.*)$ https://plans.sd23ops.ca/$1 [R,L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
