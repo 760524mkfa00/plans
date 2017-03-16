@@ -19,7 +19,7 @@ class CreatePicturesTable extends Migration
             $table->integer('building_id')->unsigned();
             $table->string('name');
             $table->string('path');
-            $table->string('thumbnail');
+            $table->string('thumbnail_path');
             $table->timestamps();
 
             $table->foreign('building_id')->references('id')->on('buildings');

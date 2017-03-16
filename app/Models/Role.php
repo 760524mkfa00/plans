@@ -12,7 +12,7 @@ class Role extends Model
 
     public function users()
     {
-        return $this->belongsToMany('Plans\Model\User')->withTimestamps();
+        return $this->belongsToMany('Plans\Models\User')->withTimestamps();
     }
 
 }

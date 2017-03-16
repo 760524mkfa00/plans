@@ -20,6 +20,7 @@ class CreatePlansTable extends Migration
             $table->integer('floor_id')->unsigned();
             $table->integer('type_id')->unsigned();
             $table->string('name');
+            $table->string('filename');
             $table->string('path');
             $table->string('file_type');
             $table->timestamps();

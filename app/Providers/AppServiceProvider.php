@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->share('user', auth()->user() ?: new \Plans\Models\User);
     }
 
     /**

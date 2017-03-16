@@ -3,6 +3,8 @@
 namespace Plans\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Plans\Models\Role;
+use Plans\Models\User;
 
 class RoleController extends Controller
 {

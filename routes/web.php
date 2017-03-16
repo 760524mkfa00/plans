@@ -17,4 +17,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/buildings', ['as' => 'buildings', 'uses' => 'BuildingController@index']);
+Route::get('/buildings/create', ['as' => 'building.create', 'uses' => 'BuildingController@create']);
+Route::post('/buildings', ['as' => 'buildings', 'uses' => 'BuildingController@store']);
+Route::get('/buildings/{building}/show', ['as' => 'building.show', 'uses' => 'BuildingController@show']);
+
+Route::get('/buildings/{building}/edit', ['as' => 'building.edit', 'uses' => 'BuildingController@edit']);
+
+Route::post("/plan/upload", ['as' => 'plan.upload', 'uses' => 'PlanController@uploadFile']);
+Route::get("/plan/{plan}/download", ['as' => 'plan.download', 'uses' => 'PlanController@downloadFile']);
+
+
+Route::get('/roles', 'RoleController@index');
+Route::post('/roles', 'RoleController@store');
+Route::get('/roles/edit/{id}', 'RoleController@edit');
+Route::post('/roles/edit/{id}', ['as' => 'roles.update', 'uses' => 'RoleController@update']);
+
+Route::get('/users', 'UsersController@index');

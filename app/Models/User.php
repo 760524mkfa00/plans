@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password',
     ];
 
     /**
@@ -31,6 +31,26 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany('Plans\Models\Role')->withTimestamps();
+    }
+
+
+    public function hasRole($name)
+    {
+
+//        $user = Auth::user();
+
+        foreach (\Auth::user()->roles as $role) {
+            if ($role->name == $name) return true;
+        }
+
+        return false;
+    }
+
+    public function withRole($role)
+    {
+        return $this->whereHas('roles', function($q) use ($role) {
+            $q->where('name', $role);
+        })->get();
     }
 
 }

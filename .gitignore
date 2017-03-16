@@ -9,3 +9,4 @@ Homestead.yaml
 .env
 /public/.htaccess
 .gitignore
+/storage/app/files
