@@ -22,7 +22,7 @@ class Plan extends Model
 
     Public function types()
     {
-        return $this->belongsTo('Plans\models\Type', 'type_id');
+        return $this->belongsTo('Plans\Models\Type', 'type_id');
     }
 
     public function download()
