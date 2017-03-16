@@ -36,8 +36,7 @@ class PlanController extends Controller
 
         $path = $s3->url($filePath);
 
-        dd($path);
-        return back();
+        return back()->withMessage('Uploaded to' . $path);
 
     }
 }
