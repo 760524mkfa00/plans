@@ -81,16 +81,18 @@
 
 @section('footer')
 
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" charset="UTF-8"></script>
+    {{--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" charset="UTF-8"></script>--}}
 
-    <script type="text/javascript" src="//www.plupload.com/plupload/js/plupload.full.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="//www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="/js/plupload.full.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/js/jquery.ui.plupload.min.js" charset="UTF-8"></script>
 
 
     {{--<link href="{{ asset('js/jquery-ui.min.js') }}" type="text/javascript">--}}
 
     {{--<link href="{{ asset('js/plupload.full.min.js') }}" type="text/javascript">--}}
-    {{--<link href="{{ asset('js/jquery.ui.plupload.min.js') }}" type="text/javascript">--}}
+{{--    <link href="{{ asset('js/jquery.ui.plupload.min.js') }}" type="text/javascript">--}}
     <script>
         // Initialize the widget when the DOM is ready
 
