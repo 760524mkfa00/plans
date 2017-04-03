@@ -4,6 +4,7 @@ namespace Plans\Http\Controllers;
 
 use Plans\Models\Plan;
 use Illuminate\Http\Request;
+use JildertMiedema\LaravelPlupload\Facades\Plupload;
 
 class PlanController extends Controller
 {
@@ -15,28 +16,75 @@ class PlanController extends Controller
      */
     public function downloadFile($id)
     {
-        $file = Plan::findOrFail($id)->download();
 
-        return response()->download($file->path, $file->name);
+        $file = Plan::findOrFail($id);
+
+        return response()->download(storage_path("app/{$file->path}"), $file->name);
 
 
     }
 
     public function uploadFile(Request $request)
     {
-        $file = $request->file('diagram');
 
-        $s3 = \Storage::disk('local');
+        return Plupload::receive('file', function ($file) use ($request)
+        {
 
-        $fileName = time() . '-' . $file->getClientOriginalName();
+            $s3 = \Storage::disk('s3');
 
-        $filePath = "plans/$request->buildingName/";
+            $name = sha1(time() . $file->getClientOriginalName());
+            $extension = $file->getClientOriginalExtension();
+            $fileName = "{$name}.{$extension}";
 
-        $s3->put($filePath . $fileName, fopen($file, 'r+'));
+            $filePath = "plans/$request->buildingName/$fileName";
 
-        $path = $s3->url($filePath);
+            $s3->put($filePath, fopen($file, 'r+'));
 
-        return back()->withMessage('Uploaded to' . $path);
+            Plan::create([
+                'building_id' => htmlspecialchars_decode($request->building_id),
+                'name' => $file->getClientOriginalName(),
+                'filename' => $fileName,
+                'path' => $filePath,
+                'file_type' => $file->getClientOriginalExtension(),
+                'floor_id' => null,
+                'type_id' => null
+            ]);
+
+            return $s3->url($filePath);
+        });
+
+//        $file = $request->file('diagram');
+//
+//        $s3 = \Storage::disk('local');
+//
+
+//
+//        $s3->put($filePath . $fileName, fopen($file, 'r+'));
+//
+//        $path = $s3->url($filePath);
+//
+//        return back()->withMessage('Uploaded to' . $path);
+
+    }
+
+    public function edit(Plan $plan)
+    {
+        return view('plans.edit')
+            ->withPlan($plan);
+    }
+
+    public function update(Request $request, Plan $plan)
+    {
+
+        $this->validate($request, [
+            'name' => 'required',
+            'floor_id' => 'required|numeric|min:1',
+            'type_id' => 'required|numeric|min:1'
+        ]);
+
+        $plan->update($request->all());
+
+        return redirect()->route('building.show', ['building' => $plan->building_id]);
 
     }
 }

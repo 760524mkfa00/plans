@@ -176,8 +176,9 @@ return [
         // Plans\Providers\BroadcastServiceProvider::class,
         Plans\Providers\EventServiceProvider::class,
         Plans\Providers\RouteServiceProvider::class,
-
+        Plans\Providers\ViewComposerServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider::class,
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Plupload' => JildertMiedema\LaravelPlupload\Facades\Plupload::class,
 
     ],
 

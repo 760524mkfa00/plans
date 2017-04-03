@@ -26,7 +26,8 @@ Route::get('/buildings/{building}/edit', ['as' => 'building.edit', 'uses' => 'Bu
 
 Route::post("/plan/upload", ['as' => 'plan.upload', 'uses' => 'PlanController@uploadFile']);
 Route::get("/plan/{plan}/download", ['as' => 'plan.download', 'uses' => 'PlanController@downloadFile']);
-
+Route::get("/plan/edit/{plan}", ['as' => 'plan.edit', 'uses' => 'PlanController@edit']);
+Route::post("/plan/update/{plan}", ['as' => 'plan.update', 'uses' => 'PlanController@update']);
 
 Route::get('/roles', 'RoleController@index');
 Route::post('/roles', 'RoleController@store');

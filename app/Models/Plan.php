@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
 
-    protected $fillable = ['floor_id', 'name', 'path', 'filename', 'file_type', 'type_id'];
+    protected $fillable = ['building_id', 'floor_id', 'name', 'path', 'filename', 'file_type', 'type_id'];
 
 
     public function building()
@@ -30,7 +30,7 @@ class Plan extends Model
         $plan = new Static;
 
         return $plan->fill([
-            'path' => storage_path() . '/' . $this->path,
+            'path' => $this->path,
             'name' => $this->filename
         ]);
 

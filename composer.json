@@ -22,6 +22,9 @@
         "classmap": [
             "database"
         ],
+        "files": [
+            "app/helpers/helpers.php"
+        ],
         "psr-4": {
             "Plans\\": "app/"
         }

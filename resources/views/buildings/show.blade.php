@@ -38,11 +38,12 @@
                                 <th>File Name</th>
                                 <th>File Type</th>
                                 <th>File</th>
+                                <th>Edit</th>
                                 </thead>
                                 @foreach($building->plans as $plan)
                                     <tr>
-                                        <td>{{ $plan->floors->name }}</td>
-                                        <td>{{ $plan->types->name }}</td>
+                                        <td>{{ $plan->floors->name ?? 'Please Edit' }}</td>
+                                        <td>{{ $plan->types->name ?? 'Please Edit' }}</td>
                                         <td>{{ $plan->name }}</td>
                                         @if($plan->file_type <> "pdf")
                                             <td style="color:blue"><i
@@ -53,6 +54,7 @@
                                             </td>
                                         @endif
                                         <td><a href="{{ route('plan.download', [$plan->id])  }}">Download File</a></td>
+                                        <td><a href="{{ route('plan.edit', [$plan]) }}">Edit</a></td>
                                     </tr>
                                 @endforeach
                             </table>
@@ -63,35 +65,9 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                        <form method="POST" action="{{ route('plan.upload') }}" enctype="multipart/form-data" class="form form-inline">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-                            <input type="hidden" name="buildingName" value="{{ $building->building_name }}">
-                            <input type="hidden" name="building_id" value="{{ $building->id }}">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="file" name="diagram">
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="file_name">File Name</label>
-                                        <input type="text" class="form-control" id="file_name" name="file_name" placeholder="File name" value="{{ old('file_name') }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="floor_id">Location</label>
-                                        <input type="text" class="form-control" id="floor_id" name="floor_id" placeholder="Floor" value="{{ old('floor_id') }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="type_id">Type</label>
-                                        <input type="text" class="form-control" id="type_id" name="type_id" placeholder="Type" value="{{ old('type_id') }}">
-                                    </div>
-                                    <button type="submit">Submit</button>
-                                </div>
-                            </div>
-                        </form>
+                        <div id="uploader">
+                            <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+                        </div>
 <hr/>
                     </div>
 
@@ -99,4 +75,81 @@
             </div>
         </div>
     </div>
+
+
+@endsection
+
+@section('footer')
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript" src="http://www.plupload.com/plupload/js/plupload.full.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="http://www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js" charset="UTF-8"></script>
+
+    <script>
+        // Initialize the widget when the DOM is ready
+        $(function() {
+            $("#uploader").plupload({
+
+                // General settings
+                runtimes : 'html5,flash,silverlight,html4',
+                url : "{{ route('plan.upload', ['buildingName' => $building->building_name]) }}",
+
+                // Maximum file size
+                max_file_size : '10gb',
+
+                chunk_size: '4mb',
+
+                // Resize images on clientside if we can
+                resize : {
+                    width : 200,
+                    height : 200,
+                    quality : 90,
+                    crop: true // crop to exact dimensions
+                },
+
+                // Specify what files to browse for
+                filters : [
+                    {title : "Image files", extensions : "jpg,gif,png"},
+                    {title : "PDF files", extensions : "pdf"}
+                ],
+
+                multipart_params : {building_id:"{{$building->id}}"},
+
+                // Rename files by clicking on their titles
+                rename: true,
+
+                // Sort files
+                sortable: true,
+
+                // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+                dragdrop: true,
+
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+
+
+
+                // Views to activate
+                views: {
+                    list: true,
+                    thumbs: false, // Show thumbs
+                    active: 'list'
+                },
+
+                // Flash settings
+                flash_swf_url : '/plupload/js/Moxie.swf',
+
+                // Silverlight settings
+                silverlight_xap_url : '/plupload/js/Moxie.xap',
+
+
+            });
+        });
+    </script>
+
 @endsection

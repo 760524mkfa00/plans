@@ -17,8 +17,8 @@ class CreatePlansTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('building_id')->unsigned();
-            $table->integer('floor_id')->unsigned();
-            $table->integer('type_id')->unsigned();
+            $table->integer('floor_id')->unsigned()->nullable();
+            $table->integer('type_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('filename');
             $table->string('path');
