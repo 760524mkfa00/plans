@@ -81,13 +81,13 @@
 
 @section('footer')
     <script
-            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
 
 
-    <script type="text/javascript" src="http://www.plupload.com/plupload/js/plupload.full.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="http://www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="//www.plupload.com/plupload/js/plupload.full.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="//www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js" charset="UTF-8"></script>
 
     <script>
         // Initialize the widget when the DOM is ready
