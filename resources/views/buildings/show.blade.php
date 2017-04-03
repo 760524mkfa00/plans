@@ -80,73 +80,78 @@
 @endsection
 
 @section('footer')
-    <script
-            src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="//www.plupload.com/plupload/js/plupload.full.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="//www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js" charset="UTF-8"></script>
 
 
-    <link href="{{ asset('js/plupload.full.min.js') }}">
-    <link href="{{ asset('js/jquery.ui.plupload.min.js') }}">
+    {{--<link href="{{ asset('js/jquery-ui.min.js') }}" type="text/javascript">--}}
+
+    {{--<link href="{{ asset('js/plupload.full.min.js') }}" type="text/javascript">--}}
+    {{--<link href="{{ asset('js/jquery.ui.plupload.min.js') }}" type="text/javascript">--}}
     <script>
         // Initialize the widget when the DOM is ready
-        $(function() {
-            $("#uploader").plupload({
 
-                // General settings
-                runtimes : 'html5,flash,silverlight,html4',
-                url : "{{ route('plan.upload', ['buildingName' => $building->building_name]) }}",
+        $(document).ready(function() {
+            $(function () {
+                $("#uploader").plupload({
 
-                // Maximum file size
-                max_file_size : '10gb',
+                    // General settings
+                    runtimes: 'html5,flash,silverlight,html4',
+                    url: "{{ route('plan.upload', ['buildingName' => $building->building_name]) }}",
 
-                chunk_size: '4mb',
+                    // Maximum file size
+                    max_file_size: '10gb',
 
-                // Resize images on clientside if we can
-                resize : {
-                    width : 200,
-                    height : 200,
-                    quality : 90,
-                    crop: true // crop to exact dimensions
-                },
+                    chunk_size: '4mb',
 
-                // Specify what files to browse for
-                filters : [
-                    {title : "Image files", extensions : "jpg,gif,png"},
-                    {title : "PDF files", extensions : "pdf"}
-                ],
+                    // Resize images on clientside if we can
+                    resize: {
+                        width: 200,
+                        height: 200,
+                        quality: 90,
+                        crop: true // crop to exact dimensions
+                    },
 
-                multipart_params : {building_id:"{{$building->id}}"},
+                    // Specify what files to browse for
+                    filters: [
+                        {title: "Image files", extensions: "jpg,gif,png"},
+                        {title: "PDF files", extensions: "pdf"}
+                    ],
 
-                // Rename files by clicking on their titles
-                rename: true,
+                    multipart_params: {building_id: "{{$building->id}}"},
 
-                // Sort files
-                sortable: true,
+                    // Rename files by clicking on their titles
+                    rename: true,
 
-                // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
-                dragdrop: true,
+                    // Sort files
+                    sortable: true,
 
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+                    // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+                    dragdrop: true,
 
-
-
-                // Views to activate
-                views: {
-                    list: true,
-                    thumbs: false, // Show thumbs
-                    active: 'list'
-                },
-
-                // Flash settings
-                flash_swf_url : '/plupload/js/Moxie.swf',
-
-                // Silverlight settings
-                silverlight_xap_url : '/plupload/js/Moxie.xap',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
 
 
+                    // Views to activate
+                    views: {
+                        list: true,
+                        thumbs: false, // Show thumbs
+                        active: 'list'
+                    },
+
+                    // Flash settings
+                    flash_swf_url: '/plupload/js/Moxie.swf',
+
+                    // Silverlight settings
+                    silverlight_xap_url: '/plupload/js/Moxie.xap'
+
+
+                });
             });
         });
     </script>
