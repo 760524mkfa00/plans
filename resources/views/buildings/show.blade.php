@@ -86,9 +86,8 @@
             crossorigin="anonymous"></script>
 
 
-    <script type="text/javascript" src="//www.plupload.com/plupload/js/plupload.full.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="//www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js" charset="UTF-8"></script>
-
+    <link href="{{ asset('js/plupload.full.min.js') }}">
+    <link href="{{ asset('js/jquery.ui.plupload.min.js') }}">
     <script>
         // Initialize the widget when the DOM is ready
         $(function() {
