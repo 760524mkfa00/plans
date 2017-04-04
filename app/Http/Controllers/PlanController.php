@@ -32,7 +32,7 @@ class PlanController extends Controller
         $headers = [
             'Content-Type' => 'application/pdf',
             'Content-Description' => 'File Transfer',
-            'Content-Disposition' => "attachment; filename={$file->filename}",
+            'Content-Disposition' => "attachment; filename={$file->path}",
             'filename'=> $file->name
         ];
 
