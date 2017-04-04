@@ -27,16 +27,20 @@ class PlanController extends Controller
 
         $disk = \Storage::disk('s3');
 
-        $file = $disk->get("{$file->path}");
+        $stream = $disk->readStream("{$file->path}");
+        $contents = stream_get_contents($stream);
+        fclose($stream);
 
-        $headers = [
-            'Content-Type' => 'application/pdf',
-            'Content-Description' => 'File Transfer',
-            'Content-Disposition' => "attachment; filename={$file->path}",
-            'filename'=> $file->name
-        ];
+        return $contents;
 
-        return response($file, 200, $headers);
+//        $headers = [
+//            'Content-Type' => 'application/pdf',
+//            'Content-Description' => 'File Transfer',
+//            'Content-Disposition' => "attachment; filename={$file}",
+//            'filename'=> $file->name
+//        ];
+//
+//        return response($file, 200, $headers);
 
     }
 
