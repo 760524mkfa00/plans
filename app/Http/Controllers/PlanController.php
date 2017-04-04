@@ -25,10 +25,10 @@ class PlanController extends Controller
             return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
         }
 
-        $file = Storage::disk('s3')->get($file->path);
+        $cloudFile = Storage::disk('s3')->get($file->path);
         header("Content-type: application/pdf");
-        header("Content-Disposition: attachment; filename=file.pdf");
-        echo $file;
+        header("Content-Disposition: attachment; filename={$file->name}");
+        echo $cloudFile;
 
 //        $disk = \Storage::disk('s3');
 ////        $contents = $disk->get($file->path);
