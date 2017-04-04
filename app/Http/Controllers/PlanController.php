@@ -31,7 +31,7 @@ class PlanController extends Controller
         $contents = stream_get_contents($stream);
         fclose($stream);
 
-        return $contents;
+        return dd($contents);
 
 //        $headers = [
 //            'Content-Type' => 'application/pdf',
