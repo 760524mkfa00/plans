@@ -27,7 +27,7 @@ class PlanController extends Controller
 
         $disk = \Storage::disk('s3');
 
-        return $disk->get("{$file->path}");
+        return response()->$disk->get("{$file->path}");
 
     }
 
