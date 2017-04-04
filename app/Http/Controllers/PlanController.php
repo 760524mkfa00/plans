@@ -26,10 +26,8 @@ class PlanController extends Controller
         }
 
         $cloudFile = Storage::disk('s3')->get($file->path);
-        dd($cloudFile->size);
         header("Content-type: application/pdf");
         header("Content-Disposition: attachment; filename={$file->name}");
-        header("Content-Length: {$cloudFile->size}");
         echo $cloudFile;
 
 //        $disk = \Storage::disk('s3');
