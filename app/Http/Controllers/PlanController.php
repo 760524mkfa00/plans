@@ -25,24 +25,29 @@ class PlanController extends Controller
             return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
         }
 
-        $disk = \Storage::disk('s3');
-//        $contents = $disk->get($file->path);
+        $file = Storage::disk('s3')->get($file->path);
+        header("Content-type: application/pdf");
+        header("Content-Disposition: attachment; filename=file.pdf");
+        echo $file;
 
-
-
-        $stream = $disk->readStream("{$file->path}");
-        $contents = stream_get_contents($stream);
-        fclose($stream);
+//        $disk = \Storage::disk('s3');
+////        $contents = $disk->get($file->path);
 //
-//        return response()->$contents;
-
-        $headers = [
-            'Content-Type' => 'application/pdf',
-            'Content-Description' => 'File Transfer',
-            'Content-Disposition' => "attachment; filename={$contents}"
-        ];
-
-        return response($contents, 200, $headers);
+//
+//
+//        $stream = $disk->readStream("{$file->path}");
+//        $contents = stream_get_contents($stream);
+//        fclose($stream);
+////
+////        return response()->$contents;
+//
+//        $headers = [
+//            'Content-Type' => 'application/pdf',
+//            'Content-Description' => 'File Transfer',
+//            'Content-Disposition' => "attachment; filename={$contents}"
+//        ];
+//
+//        return response($contents, 200, $headers);
 
     }
 
