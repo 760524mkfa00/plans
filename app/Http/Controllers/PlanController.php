@@ -26,12 +26,12 @@ class PlanController extends Controller
         }
 
         $disk = \Storage::disk('s3');
-        $contents = $disk->get($file->path);
+//        $contents = $disk->get($file->path);
 
 
 
-//        $stream = $disk->readStream("{$file->path}");
-//        $contents = stream_get_contents($stream);
+        $stream = $disk->readStream("{$file->path}");
+        $contents = stream_get_contents($stream);
 //        fclose($stream);
 //
 //        return response()->$contents;
