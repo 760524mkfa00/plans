@@ -107,7 +107,7 @@
                     // Maximum file size
                     max_file_size: '10gb',
 
-                    chunk_size: '4mb',
+                    chunk_size: '2mb',
 
                     // Resize images on clientside if we can
                     resize: {
