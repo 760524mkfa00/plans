@@ -32,15 +32,14 @@ class PlanController extends Controller
 
         $stream = $disk->readStream("{$file->path}");
         $contents = stream_get_contents($stream);
-//        fclose($stream);
+        fclose($stream);
 //
 //        return response()->$contents;
 
         $headers = [
             'Content-Type' => 'application/pdf',
             'Content-Description' => 'File Transfer',
-            'Content-Disposition' => "attachment; filename={$contents}",
-            'filename'=> $file->name
+            'Content-Disposition' => "attachment; filename={$contents}"
         ];
 
         return response($contents, 200, $headers);
