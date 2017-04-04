@@ -2,6 +2,7 @@
 
 namespace Plans\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Plans\Models\Plan;
 use Illuminate\Http\Request;
 use JildertMiedema\LaravelPlupload\Facades\Plupload;
@@ -19,8 +20,14 @@ class PlanController extends Controller
 
         $file = Plan::findOrFail($id);
 
-        return response()->download(storage_path("app/{$file->path}"), $file->name);
+        if(substr($file->path, 0, 3) === 'app')
+        {
+            return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
+        }
 
+        $disk = \Storage::disk('s3');
+
+        return $disk->get("{$file->path}");
 
     }
 
