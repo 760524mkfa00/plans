@@ -19,6 +19,7 @@ class PlanController extends Controller
     {
 
         $file = Plan::findOrFail($id);
+        $targetFile = null;
 
         if(substr($file->path, 0, 3) === 'app')
         {
@@ -28,10 +29,12 @@ class PlanController extends Controller
         $cloudFile = Storage::disk('s3')
             ->getDriver()
             ->readStream($file->path);
+
+        file_put_contents($targetFile, stream_get_contents($cloudFile), FILE_APPEND);
         header("Content-type: application/pdf");
         header("Content-Disposition: attachment; filename={$file->name}");
         dd('here');
-        echo $cloudFile;
+        echo $targetFile;
 
 //        $disk = \Storage::disk('s3');
 ////        $contents = $disk->get($file->path);
