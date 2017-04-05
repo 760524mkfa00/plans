@@ -19,7 +19,6 @@ class PlanController extends Controller
     {
 
         $file = Plan::findOrFail($id);
-//        $targetFile = null;
 
         if(substr($file->path, 0, 3) === 'app')
         {
@@ -31,12 +30,12 @@ class PlanController extends Controller
             ->readStream($file->path);
 
         $size = Storage::disk('s3')->size($file->path);
-        dd($size);
-        return \Response::stream(function() use($stream) {
+
+        return \Response::stream(function() use($stream, $size) {
             fpassthru($stream);
         }, 200, [
             "Content-Type" => "application/pdf",
-//            "Content-Length" => $fs->getSize($file),
+            "Content-Length" => $size,
             "Content-disposition" => "attachment; filename={$file->name}",
         ]);
 
