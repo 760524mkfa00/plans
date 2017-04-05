@@ -26,8 +26,8 @@ class PlanController extends Controller
             return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
         }
 
-        $disk = Storage::disk('s3')->getDriver();
-        $cloudFile = $disk->readStream($file->path);
+        $disk = Storage::disk('s3');
+        $cloudFile = $disk->getDriver()->readStream($file->path);
 
 //        $size = Storage::disk('s3')->size($file->path);
 
@@ -35,7 +35,7 @@ class PlanController extends Controller
             fpassthru($cloudFile);
         }, 200, [
             "Content-Type" => "application/pdf",
-            "Content-Length" => $disk->getSize($file->path),
+            "Content-Length" => $disk->size($file->path),
             "Content-disposition" => "attachment; filename={$file->name}",
         ]);
 
