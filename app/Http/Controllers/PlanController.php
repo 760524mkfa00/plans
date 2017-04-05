@@ -33,7 +33,7 @@ class PlanController extends Controller
         return \Response::stream(function() use($stream) {
             fpassthru($stream);
         }, 200, [
-            "Content-Type" => $fs->getMimetype($file),
+            "Content-Type" => "application/pdf",
 //            "Content-Length" => $fs->getSize($file),
             "Content-disposition" => "attachment; filename={$file->name}",
         ]);
