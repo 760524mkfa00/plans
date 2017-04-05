@@ -30,6 +30,8 @@ class PlanController extends Controller
             ->getDriver()
             ->readStream($file->path);
 
+        $size = Storage::disk('s3')->size($file->path);
+        dd($size);
         return \Response::stream(function() use($stream) {
             fpassthru($stream);
         }, 200, [
@@ -37,31 +39,6 @@ class PlanController extends Controller
 //            "Content-Length" => $fs->getSize($file),
             "Content-disposition" => "attachment; filename={$file->name}",
         ]);
-
-//        file_put_contents($targetFile, stream_get_contents($cloudFile), FILE_APPEND);
-//        header("Content-type: application/pdf");
-//        header("Content-Disposition: attachment; filename={$file->name}");
-//        dd('here');
-//        echo stream_get_contents($cloudFile);
-
-//        $disk = \Storage::disk('s3');
-////        $contents = $disk->get($file->path);
-//
-//
-//
-//        $stream = $disk->readStream("{$file->path}");
-//        $contents = stream_get_contents($stream);
-//        fclose($stream);
-////
-////        return response()->$contents;
-//
-//        $headers = [
-//            'Content-Type' => 'application/pdf',
-//            'Content-Description' => 'File Transfer',
-//            'Content-Disposition' => "attachment; filename={$contents}"
-//        ];
-//
-//        return response($contents, 200, $headers);
 
     }
 
