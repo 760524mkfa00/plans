@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                @if($user->hasRole('manager'))
+                @if($user->hasRole('Manager'))
                     <form method="POST" action="{{ route('plan.update', [$plan]) }}"
                           class="form form-inline">
                         {{ csrf_field() }}

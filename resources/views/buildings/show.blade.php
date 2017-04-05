@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                @if($user->hasRole('manager'))
+                @if($user->hasRole('Manager'))
                     <div class="row">
                         <div class="col-md-12">
 

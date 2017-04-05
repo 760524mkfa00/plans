@@ -24,7 +24,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @if($user->hasRole('manager'))
+                        @if($user->hasRole('Manager'))
                             <a class="btn btn-primary" href="{{ route('building.create') }}">New Building</a>
                         @endif
                     </div>
