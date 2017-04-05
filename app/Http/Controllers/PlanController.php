@@ -2,9 +2,9 @@
 
 namespace Plans\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use Plans\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use JildertMiedema\LaravelPlupload\Facades\Plupload;
 
 class PlanController extends Controller
@@ -29,13 +29,12 @@ class PlanController extends Controller
         $disk = Storage::disk('s3');
         $cloudFile = $disk->getDriver()->readStream($file->path);
         $size = $disk->size($file->path);
+        $mimeType = $disk->mimeType($file->path);
 
-//        $size = Storage::disk('s3')->size($file->path);
-
-        return \Response::stream(function() use($cloudFile, $size) {
+        return \Response::stream(function() use($cloudFile, $size, $mimeType, $file) {
             fpassthru($cloudFile);
         }, 200, [
-            "Content-Type" => "application/pdf",
+            "Content-Type" => $mimeType,
             "Content-Length" => $size,
             "Content-disposition" => "attachment; filename={$file->name}",
         ]);
@@ -48,7 +47,7 @@ class PlanController extends Controller
         return Plupload::receive('file', function ($file) use ($request)
         {
 
-            $s3 = \Storage::disk('s3');
+            $s3 = Storage::disk('s3');
 
             $name = sha1(time() . $file->getClientOriginalName());
             $extension = $file->getClientOriginalExtension();
