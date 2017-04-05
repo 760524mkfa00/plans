@@ -38,7 +38,7 @@
                                 <th>File Name</th>
                                 <th>File Type</th>
                                 <th>File</th>
-                                @if($user->hasRole('manager'))
+                                @if($user->hasRole('Manager'))
                                     <th>Edit</th>
                                 @endif
                                 </thead>
@@ -56,9 +56,9 @@
                                             </td>
                                         @endif
                                         <td><a href="{{ route('plan.download', [$plan->id])  }}">Download File</a></td>
-{{--                                        @if($user->hasRole('manager'))--}}
+                                        @if($user->hasRole('Manager'))
                                             <td><a href="{{ route('plan.edit', [$plan]) }}">Edit</a></td>
-                                        {{--@endif--}}
+                                        @endif
                                     </tr>
                                 @endforeach
                             </table>
