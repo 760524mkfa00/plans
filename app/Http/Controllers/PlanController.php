@@ -28,7 +28,7 @@ class PlanController extends Controller
 
         $disk = Storage::disk('s3');
         $cloudFile = $disk->getDriver()->readStream($file->path);
-        $size = $disk->size($file->path)
+        $size = $disk->size($file->path);
 
 //        $size = Storage::disk('s3')->size($file->path);
 
