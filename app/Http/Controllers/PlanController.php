@@ -26,15 +26,23 @@ class PlanController extends Controller
             return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
         }
 
-        $cloudFile = Storage::disk('s3')
+        $stream = Storage::disk('s3')
             ->getDriver()
             ->readStream($file->path);
 
+        return \Response::stream(function() use($stream) {
+            fpassthru($stream);
+        }, 200, [
+            "Content-Type" => $fs->getMimetype($file),
+//            "Content-Length" => $fs->getSize($file),
+            "Content-disposition" => "attachment; filename={$file->name}",
+        ]);
+
 //        file_put_contents($targetFile, stream_get_contents($cloudFile), FILE_APPEND);
-        header("Content-type: application/pdf");
-        header("Content-Disposition: attachment; filename={$file->name}");
-        dd('here');
-        echo stream_get_contents($cloudFile);
+//        header("Content-type: application/pdf");
+//        header("Content-Disposition: attachment; filename={$file->name}");
+//        dd('here');
+//        echo stream_get_contents($cloudFile);
 
 //        $disk = \Storage::disk('s3');
 ////        $contents = $disk->get($file->path);
