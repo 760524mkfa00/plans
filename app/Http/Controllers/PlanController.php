@@ -20,22 +20,22 @@ class PlanController extends Controller
 
         $file = Plan::findOrFail($id);
 
+        // Check if it's stored locally, from original upload
         if(substr($file->path, 0, 3) === 'app')
         {
             return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
         }
 
-        $stream = Storage::disk('s3')
-            ->getDriver()
-            ->readStream($file->path);
+        $disk = Storage::disk('s3')->getDriver();
+        $cloudFile = $disk->readStream($file->path);
 
-        $size = Storage::disk('s3')->size($file->path);
+//        $size = Storage::disk('s3')->size($file->path);
 
-        return \Response::stream(function() use($stream, $size) {
-            fpassthru($stream);
+        return \Response::stream(function() use($cloudFile, $size) {
+            fpassthru($cloudFile);
         }, 200, [
             "Content-Type" => "application/pdf",
-            "Content-Length" => $size,
+            "Content-Length" => $disk->getSize($file->path),
             "Content-disposition" => "attachment; filename={$file->name}",
         ]);
 
