@@ -43,7 +43,7 @@ class PlanController extends Controller
 
     public function uploadFile(Request $request)
     {
-
+        //Use Plupload for multiple uploads and larger files
         return Plupload::receive('file', function ($file) use ($request)
         {
 
@@ -69,18 +69,6 @@ class PlanController extends Controller
 
             return $s3->url($filePath);
         });
-
-//        $file = $request->file('diagram');
-//
-//        $s3 = \Storage::disk('local');
-//
-
-//
-//        $s3->put($filePath . $fileName, fopen($file, 'r+'));
-//
-//        $path = $s3->url($filePath);
-//
-//        return back()->withMessage('Uploaded to' . $path);
 
     }
 

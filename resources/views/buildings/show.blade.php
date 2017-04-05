@@ -38,7 +38,9 @@
                                 <th>File Name</th>
                                 <th>File Type</th>
                                 <th>File</th>
-                                <th>Edit</th>
+                                @if($user->hasRole('manager'))
+                                    <th>Edit</th>
+                                @endif
                                 </thead>
                                 @foreach($building->plans as $plan)
                                     <tr>
@@ -54,24 +56,26 @@
                                             </td>
                                         @endif
                                         <td><a href="{{ route('plan.download', [$plan->id])  }}">Download File</a></td>
-                                        <td><a href="{{ route('plan.edit', [$plan]) }}">Edit</a></td>
+{{--                                        @if($user->hasRole('manager'))--}}
+                                            <td><a href="{{ route('plan.edit', [$plan]) }}">Edit</a></td>
+                                        {{--@endif--}}
                                     </tr>
                                 @endforeach
                             </table>
                         </div>
                     </div>
                 </div>
+                @if($user->hasRole('manager'))
+                    <div class="row">
+                        <div class="col-md-12">
 
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <div id="uploader">
-                            <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+                            <div id="uploader">
+                                <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+                            </div>
+                            <hr/>
                         </div>
-<hr/>
                     </div>
-
-                </div>
+                @endif
             </div>
         </div>
     </div>
