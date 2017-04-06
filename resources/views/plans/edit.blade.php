@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container">
+        @include('./_partials/error')
+        @include('./_partials/message')
         <div class="row">
             <div class="col-md-12">
                 @if($user->hasRole('Manager'))
