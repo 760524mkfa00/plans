@@ -49,6 +49,7 @@
                                 <th>File</th>
                                 @if($user->hasRole('Manager'))
                                     <th>Edit</th>
+                                    <th>Remove</th>
                                 @endif
                                 </thead>
                                 @foreach($building->plans as $plan)
@@ -67,6 +68,7 @@
                                         <td><a href="{{ route('plan.download', [$plan->id])  }}">Download File</a></td>
                                         @if($user->hasRole('Manager'))
                                             <td><a href="{{ route('plan.edit', [$plan]) }}">Edit</a></td>
+                                            <td><a href="{{ route('plan.remove', [$plan]) }}">Remove</a></td>
                                         @endif
                                     </tr>
                                 @endforeach

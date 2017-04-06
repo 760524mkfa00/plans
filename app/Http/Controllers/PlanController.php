@@ -92,4 +92,21 @@ class PlanController extends Controller
         return redirect()->route('building.show', ['building' => $plan->building_id]);
 
     }
+
+
+    public function remove(Plan $plan)
+    {
+
+        // Check if it's stored locally, from original upload
+        if(substr($plan->path, 0, 3) === 'app') {
+            \File::delete(storage_path($plan->path));
+
+        } else {
+            Storage::disk('s3')->delete($plan->path);
+        }
+
+        $plan->delete();
+
+        return  back()->withMessage('Plan removed.');
+    }
 }
