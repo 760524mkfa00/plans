@@ -3,6 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
+            @include('./_partials/error')
+            @include('./_partials/message')
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Buildings</div>

@@ -21,8 +21,8 @@ Route::get('/buildings', ['as' => 'buildings', 'uses' => 'BuildingController@ind
 Route::get('/buildings/create', ['as' => 'building.create', 'uses' => 'BuildingController@create']);
 Route::post('/buildings', ['as' => 'buildings', 'uses' => 'BuildingController@store']);
 Route::get('/buildings/{building}/show', ['as' => 'building.show', 'uses' => 'BuildingController@show']);
-
 Route::get('/buildings/{building}/edit', ['as' => 'building.edit', 'uses' => 'BuildingController@edit']);
+Route::patch('/buildings/{building}/update', ['as' => 'building.update', 'uses' => 'BuildingController@update']);
 
 Route::post("/plan/upload", ['as' => 'plan.upload', 'uses' => 'PlanController@uploadFile']);
 Route::get("/plan/{plan}/download", ['as' => 'plan.download', 'uses' => 'PlanController@downloadFile']);

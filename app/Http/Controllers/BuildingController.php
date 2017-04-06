@@ -4,6 +4,7 @@ namespace Plans\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Plans\Http\Requests\CreateBuilding;
+use Plans\Http\Requests\UpdateBuilding;
 use Plans\Models\Building;
 
 class BuildingController extends Controller
@@ -42,6 +43,19 @@ class BuildingController extends Controller
     {
         return view('buildings.show')
             ->withBuilding($building->with('plans', 'pictures', 'plans.floors', 'plans.types')->where('id', $building->id)->first());
+    }
+
+    public function edit(Building $building)
+    {
+        return view('buildings.edit')
+            ->withBuilding($building);
+    }
+
+    public function update(UpdateBuilding $request, Building $building)
+    {
+        $building->update($request->all());
+
+        return redirect()->route('buildings')->withMessage('Building Updated.');
     }
 
 

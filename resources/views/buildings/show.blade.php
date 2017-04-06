@@ -2,12 +2,21 @@
 
 @section('content')
     <div class="container">
-
+        @include('./_partials/error')
+        @include('./_partials/message')
         <div class="row">
             <div class="col-md-12">
-                @include('./_partials/error')
-                @include('./_partials/message')
-                <h1>{{ $building->building_name }}</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>{{ $building->building_name }}</h1>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        @if($user->hasRole('Manager'))
+                            <a class="btn btn-primary" href="{{ route('building.edit', [$building]) }}">Edit Building</a>
+                        @endif
+                    </div>
+                </div>
+
                 <p>{{ $building->street . ', ' . $building->town . ', ' . $building->postal }}</p>
                 <p>{{ $building->description }}</p>
                 <hr/>

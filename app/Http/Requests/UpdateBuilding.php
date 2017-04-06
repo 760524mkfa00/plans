@@ -3,8 +3,9 @@
 namespace Plans\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateBuilding extends FormRequest
+class UpdateBuilding extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +25,7 @@ class CreateBuilding extends FormRequest
     public function rules()
     {
         return [
-            'building_name' => 'required|unique:buildings',
+            'building_name' => ['required', Rule::unique('buildings')->ignore($this->id, 'id')],
             'street' => 'required',
             'town' => 'required',
             'postal' => 'required',
