@@ -2,6 +2,7 @@
 
 namespace Plans\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
 use Plans\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -53,7 +54,14 @@ class PlanController extends Controller
             $extension = $file->getClientOriginalExtension();
             $fileName = "{$name}.{$extension}";
 
-            $filePath = "plans/$request->buildingName/$fileName";
+            $path = "plans/$request->buildingName";
+
+            if(!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+
+            $filePath = "$path/$fileName";
+
 
             $s3->put($filePath, fopen($file, 'r+'));
 
