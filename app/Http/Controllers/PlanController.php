@@ -32,12 +32,13 @@ class PlanController extends Controller
         $size = $disk->size($file->path);
         $mimeType = $disk->mimeType($file->path);
 
+
         return \Response::stream(function() use($cloudFile, $size, $mimeType, $file) {
             fpassthru($cloudFile);
         }, 200, [
             "Content-Type" => $mimeType,
             "Content-Length" => $size,
-            "Content-disposition" => "attachment; filename={$file->name}.pdf",
+            "Content-disposition" => "attachment; filename={$file->name}.{$file->file_type}",
         ]);
 
     }
