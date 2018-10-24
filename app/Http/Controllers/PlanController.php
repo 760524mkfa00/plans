@@ -38,7 +38,7 @@ class PlanController extends Controller
             'Content-Disposition' => "attachment; filename={$file->name}.{$file->file_type}"
         ];
 
-        return Response::stream(function() use ($disk, $file) {
+        return \Response::stream(function() use ($disk, $file) {
             $stream = $disk->getDriver()->readStream($file->path);
             fpassthru($stream);
             if (is_resource($stream)) {
