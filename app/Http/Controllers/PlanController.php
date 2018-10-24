@@ -37,7 +37,7 @@ class PlanController extends Controller
         }, 200, [
             "Content-Type" => $mimeType,
             "Content-Length" => $size,
-            "Content-disposition" => "attachment; filename={$file->name}",
+            "Content-disposition" => "attachment; filename={$file->name}.pdf",
         ]);
 
     }
