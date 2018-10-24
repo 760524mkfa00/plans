@@ -21,25 +21,39 @@ class PlanController extends Controller
 
         $file = Plan::findOrFail($id);
 
-        // Check if it's stored locally, from original upload
-        if(substr($file->path, 0, 3) === 'app')
-        {
-            return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
-        }
+//        // Check if it's stored locally, from original upload
+//        if(substr($file->path, 0, 3) === 'app')
+//        {
+//            return response()->download(storage_path("{$file->path}"), "{$file->name}.pdf");
+//        }
 
         $disk = Storage::disk('s3');
-        $cloudFile = $disk->getDriver()->readStream($file->path);
+//        $cloudFile = $disk->getDriver()->readStream($file->path);
         $size = $disk->size($file->path);
         $mimeType = $disk->mimeType($file->path);
 
+        $headers = [
+            'Content-Type'        => $mimeType,
+            'Content-Length'      => $size,
+            'Content-Disposition' => "attachment; filename={$file->name}.{$file->file_type}"
+        ];
 
-        return \Response::stream(function() use($cloudFile, $size, $mimeType, $file) {
-            fpassthru($cloudFile);
-        }, 200, [
-            "Content-Type" => $mimeType,
-            "Content-Length" => $size,
-            "Content-disposition" => "attachment; filename={$file->name}.{$file->file_type}",
-        ]);
+        return Response::stream(function() use ($disk, $file) {
+            $stream = $disk->getDriver()->readStream($file->path);
+            fpassthru($stream);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+        }, 200, $headers);
+
+//
+//        return \Response::stream(function() use($cloudFile, $size, $mimeType, $file) {
+//            fpassthru($cloudFile);
+//        }, 200, [
+//            "Content-Type" => $mimeType,
+//            "Content-Length" => $size,
+//            "Content-disposition" => "attachment; filename={$file->name}.{$file->file_type}",
+//        ]);
 
     }
 
