@@ -40,10 +40,17 @@ class PlanController extends Controller
 
         return \Response::stream(function() use ($disk, $file) {
             $stream = $disk->getDriver()->readStream($file->path);
-            fpassthru($stream);
-            if (is_resource($stream)) {
-                fclose($stream);
+//            fpassthru($stream);
+//            if (is_resource($stream)) {
+//                fclose($stream);
+//            }
+            // Check if the stream has more data to read
+            while (!feof($stream)) {
+                // Read 1024 bytes from the stream
+                echo fread($stream, 1024);
             }
+// Be sure to close the stream resource when you're done with it
+            fclose($stream);
         }, 200, $headers);
 
 //
